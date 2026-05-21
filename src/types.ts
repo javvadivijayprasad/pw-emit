@@ -94,6 +94,23 @@ export interface TestSpecIR {
   tests: TestCaseIR[];
   /** Optional extra import lines. */
   extraImports?: string[];
+  /**
+   * v1.1.0 — extra named imports to merge into the `@playwright/test`
+   * import. E.g. `["type APIResponse"]` produces
+   * `import { test, expect, type APIResponse } from "@playwright/test";`
+   * instead of the default `import { test, expect } from ...`.
+   * Used by bdd2pw v3.0.0 to surface the APIResponse type when API steps
+   * are present in the feature.
+   */
+  playwrightImports?: string[];
+  /**
+   * v1.1.0 — pre-rendered TS lines emitted inside `test.describe(...)`
+   * before any hooks or tests. Used for describe-scoped state — e.g.
+   * `let apiResponse: APIResponse | null = null;` shared across the
+   * tests in the block. Each line is emitted at one indent level
+   * deeper than the describe call.
+   */
+  describeBodyPrelude?: string;
 }
 
 // --- Reporting -------------------------------------------------------------

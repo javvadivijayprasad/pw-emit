@@ -29,8 +29,13 @@ export function emitTestSpec(ir: TestSpecIR): EmitResult {
   const warnings: ReviewItem[] = [];
   const lines: string[] = [];
 
-  // Imports
-  lines.push(`import { test, expect } from "@playwright/test";`);
+  // Imports — playwrightImports (v1.1.0) merges extra named imports into
+  // the @playwright/test line. E.g. `["type APIResponse"]` produces
+  // `import { test, expect, type APIResponse } from "@playwright/test";`.
+  const playwrightNames = ["test", "expect", ...(ir.playwrightImports ?? [])];
+  lines.push(
+    `import { ${playwrightNames.join(", ")} } from "@playwright/test";`,
+  );
   if (ir.pomImports && ir.pomImports.length) {
     for (const imp of ir.pomImports) {
       lines.push(`import { ${imp.className} } from "${imp.fromPath}";`);
@@ -43,6 +48,15 @@ export function emitTestSpec(ir: TestSpecIR): EmitResult {
 
   lines.push(`test.describe(${JSON.stringify(ir.describeName)}, () => {`);
 
+  // describeBodyPrelude (v1.1.0) — describe-scoped state declarations
+  // (e.g. `let apiResponse: APIResponse | null = null;`) emitted before
+  // any hooks. Indented one level deeper than the describe call.
+  if (ir.describeBodyPrelude && ir.describeBodyPrelude.trim().length > 0) {
+    for (const line of ir.describeBodyPrelude.split("\n")) {
+      lines.push(line.length ? `  ${line}` : "");
+    }
+  }
+
   // Hooks
   emitHooks(lines, "test.beforeAll", ir.beforeAll);
   emitHooks(lines, "test.beforeEach", ir.beforeEach);
@@ -51,7 +65,14 @@ export function emitTestSpec(ir: TestSpecIR): EmitResult {
   for (const t of ir.tests) {
     lines.push("");
     if (t.tags && t.tags.length) {
-      for (const tag of t.tags) lines.push(`  // @${tag}`);
+      // v1.1.0 — tag names sometimes arrive with `@` already attached
+      // (Gherkin parser convention: tag.name returns "@api", not "api").
+      // Strip a single leading `@` to avoid double-`@@` in the emitted
+      // comment.
+      for (const tag of t.tags) {
+        const clean = tag.startsWith("@") ? tag.slice(1) : tag;
+        lines.push(`  // @${clean}`);
+      }
     }
     if (t.jsdoc) {
       for (const docLine of t.jsdoc.split("\n")) {
