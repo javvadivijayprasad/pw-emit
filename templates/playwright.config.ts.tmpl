@@ -22,3 +22,10 @@ export default defineConfig({
     { name: "webkit", use: { ...devices["Desktop Safari"] } },
   ],
 });
+// bdd2pw:config-end
+//
+// Downstream tooling can safely splice additional code AFTER the line
+// above (e.g. extra projects, custom reporters, post-process plugins).
+// Do not duplicate the `defineConfig(...)` import or call — append a
+// `mergeConfig(...)` overlay or a `Object.assign(exports.default, ...)`
+// helper instead. See TestForge handoff Issue 6 (bdd2pw v3.2.0).

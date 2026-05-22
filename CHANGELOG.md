@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _Nothing yet._
 
+## [1.3.0] — 2026-05-22
+
+### Added (consumed by `@vijaypjavvadi/bdd2pw@3.2.0`)
+
+- `playwright.config.ts.tmpl` ends with a stable `// bdd2pw:config-end`
+  marker line followed by guidance comments. Downstream tooling can
+  splice additional code after that line without risking a duplicate
+  `defineConfig(...)` import or call. Addresses TestForge handoff
+  Issue 6.
+- `EmitProjectOptions.dependencyStrategy?: "caret" | "exact"`. When set
+  to `"exact"`, the emitted `package.json` strips the leading `^` from
+  every devDependency version so the consuming project pins to exact
+  versions. Default `"caret"` matches existing behavior. Addresses
+  TestForge handoff Issue 9.
+
+Both additions are additive and default-off — existing emission paths
+are byte-stable across the 1.2 → 1.3 upgrade. SemVer minor.
+
 ## [1.2.0] — 2026-05-22
 
 ### Added (consumed by `@vijaypjavvadi/bdd2pw@3.1.0`)

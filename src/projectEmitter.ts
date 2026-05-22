@@ -28,6 +28,14 @@ export interface EmitProjectOptions {
   baseUrl?: string;
   /** Injected as the `name` in `package.json`. */
   projectName?: string;
+  /**
+   * v1.3.0 — how to render emitted devDependency versions. `caret`
+   * (default) emits `^1.45.0` style ranges — matches existing behavior.
+   * `exact` strips the leading `^` so the project pins to the exact
+   * version. Useful for teams that have been bitten by silent
+   * minor-version Playwright bumps in CI. See TestForge handoff Issue 9.
+   */
+  dependencyStrategy?: "caret" | "exact";
 }
 
 export interface EmitProjectResult {
@@ -79,6 +87,17 @@ export async function emitProject(opts: EmitProjectOptions): Promise<EmitProject
     content = content
       .replace(/\{\{projectName\}\}/g, projectName)
       .replace(/\{\{baseUrl\}\}/g, baseUrl);
+    // v1.3.0 — pin emitted devDependency versions when requested.
+    // Only applied to package.json; other templates may legitimately
+    // use `^` for unrelated purposes (e.g. regex literals in
+    // playwright.config). Surgical string-replace inside the
+    // devDependencies block keeps the change auditable.
+    if (dest === "package.json" && opts.dependencyStrategy === "exact") {
+      content = content.replace(
+        /("(?:@?[a-zA-Z0-9/_-]+)"\s*:\s*)"\^([^"]+)"/g,
+        '$1"$2"',
+      );
+    }
     await fs.writeFile(destPath, content, "utf8");
     filesWritten.push(destPath);
   }
