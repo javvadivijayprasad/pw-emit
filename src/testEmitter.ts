@@ -82,11 +82,20 @@ export function emitTestSpec(ir: TestSpecIR): EmitResult {
     const fixtures = (t.fixtures && t.fixtures.length ? t.fixtures : ["page"]).join(
       ", ",
     );
+    // v1.2.0 — every test signature receives `testInfo` as the second
+    // argument. TypeScript is fine with unused destructured params, and
+    // downstream tooling (visual-regression hooks, custom reporters,
+    // artefact uploads) now has access to testInfo.titlePath /
+    // testInfo.attach() / testInfo.testId without post-processing.
     if (t.fixme) {
-      lines.push(`  test.fixme(${JSON.stringify(t.name)}, async ({ ${fixtures} }) => {`);
+      lines.push(
+        `  test.fixme(${JSON.stringify(t.name)}, async ({ ${fixtures} }, testInfo) => {`,
+      );
       lines.push(`    // FIXME: ${t.fixme}`);
     } else {
-      lines.push(`  test(${JSON.stringify(t.name)}, async ({ ${fixtures} }) => {`);
+      lines.push(
+        `  test(${JSON.stringify(t.name)}, async ({ ${fixtures} }, testInfo) => {`,
+      );
     }
     if (t.body && t.body.trim()) {
       lines.push(dedentAndIndent(t.body, "    "));

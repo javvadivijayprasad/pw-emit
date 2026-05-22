@@ -57,7 +57,7 @@ describe("emitTestSpec snapshots", () => {
           await loginPage.goto();
         });
 
-        test("Successful login", async ({ page }) => {
+        test("Successful login", async ({ page }, testInfo) => {
           const loginPage = new LoginPage(page);
           await loginPage.login("alice@example.com", "secret");
           await expect(loginPage.dashboardHeading).toBeVisible();

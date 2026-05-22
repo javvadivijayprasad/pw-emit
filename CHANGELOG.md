@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 _Nothing yet._
 
+## [1.2.0] — 2026-05-22
+
+### Added (consumed by `@vijaypjavvadi/bdd2pw@3.1.0`)
+
+- Every emitted `test(...)` / `test.fixme(...)` callback now receives
+  `testInfo` as the second argument:
+  `test("name", async ({ page }, testInfo) => {...})`.
+  Downstream tooling (visual-regression hooks, custom reporters,
+  artefact uploads) can now access `testInfo.titlePath`,
+  `testInfo.attach()`, `testInfo.testId` without post-processing.
+  TypeScript is fine with unused destructured params, so this is
+  zero-impact for consumers who don't reference testInfo. Addresses
+  TestForge handoff Issue 3.
+
 ## [1.1.0] — 2026-05-12
 
 ### Added (consumed by `@vijaypjavvadi/bdd2pw@3.0.0`)
