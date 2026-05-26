@@ -1,5 +1,9 @@
 # @vijaypjavvadi/pw-emit
 
+[![npm version](https://img.shields.io/npm/v/@vijaypjavvadi/pw-emit.svg)](https://www.npmjs.com/package/@vijaypjavvadi/pw-emit)
+[![npm downloads](https://img.shields.io/npm/dm/@vijaypjavvadi/pw-emit.svg)](https://www.npmjs.com/package/@vijaypjavvadi/pw-emit)
+[![license](https://img.shields.io/npm/l/@vijaypjavvadi/pw-emit.svg)](https://www.npmjs.com/package/@vijaypjavvadi/pw-emit)
+
 > Shared emitter library that renders Playwright TypeScript Page Objects, spec files, and project scaffolds from a generic IR.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
