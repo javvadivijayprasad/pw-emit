@@ -1,0 +1,32 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "@vijaypjavvadi/pw-emit: Shared Playwright TypeScript Emitter Library"
+authors:
+  - family-names: Javvadi
+    given-names: Vijay Prasad
+    orcid: "https://orcid.org/0009-0004-1192-6906"
+    affiliation: "Independent Researcher, Plainsboro, NJ, USA"
+version: 1.0.1
+doi: 10.5281/zenodo.20450316
+date-released: 2026-05-29
+url: "https://github.com/javvadivijayprasad/pw-emit"
+repository-code: "https://github.com/javvadivijayprasad/pw-emit"
+repository-artifact: "https://www.npmjs.com/package/@vijaypjavvadi/pw-emit"
+license: MIT
+keywords:
+  - test automation
+  - Playwright
+  - code generation
+  - intermediate representation
+  - software testing
+  - TypeScript
+  - npm
+abstract: >-
+  pw-emit is a shared emitter library that renders Playwright TypeScript Page
+  Objects, spec files, and project scaffolds from a generic intermediate
+  representation. Powers both @vijaypjavvadi/sel2pw (Selenium-to-Playwright AST
+  converter) and @vijaypjavvadi/bdd2pw (Gherkin-to-Playwright scaffolder with
+  Microsoft Playwright MCP integration) downstream. The separation-of-concerns
+  architecture ensures structurally consistent Playwright output across two
+  fundamentally different input domains.
