@@ -1,3 +1,5 @@
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.20450316.svg)](https://doi.org/10.5281/zenodo.20450316)
+
 # @vijaypjavvadi/pw-emit
 
 > Shared emitter library that renders Playwright TypeScript Page Objects, spec files, and project scaffolds from a generic IR.
@@ -125,6 +127,15 @@ This is the single decision that lets `sel2pw` (which rewrites raw Java method b
 - **Minor:** new exported helpers, new optional input fields (defaulted).
 - **Major:** any change to the **emitted file shape** (POM/spec format), required input fields, or removed exports.
 
+## Citation
+
+If you use `@vijaypjavvadi/pw-emit` in academic work, please cite:
+
+> Javvadi, V. P. (2026). *@vijaypjavvadi/pw-emit: Shared Playwright TypeScript Emitter Library* (Version 1.0.1) [Computer software]. Zenodo. https://doi.org/10.5281/zenodo.20450316
+
+A machine-readable [`CITATION.cff`](CITATION.cff) file is included in the repository root.
+
 ## License
+
 
 MIT
